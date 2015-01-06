@@ -1,0 +1,67 @@
+<!doctype html>
+<html ng-app="urlchecker">
+  <head>
+    <script src="angular.min.js"></script>
+    <script src="angular-route.min.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="js/reload.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="ng-grid.debug.js"></script>
+    <script src="foundation/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation({
+        tab: {
+          callback: function(tab) {
+            console.log(tab)
+          }
+        }
+      });
+    </script>
+    <!-- <link rel="stylesheet" type="text/css" href="css/ng-grid.css" /> -->
+    <link rel="stylesheet" type="text/css" href="foundation/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="foundation/css/foundation.css" />
+    <link rel="stylesheet" type="text/css" href="css/global.css" /> 
+  </head>
+  <body ng-controller="URLController">
+    <h1> URL Checker Service - <%= serviceName %> </h1>
+    <div class="large-12 columns">
+      <input type="search" class="searchbox" ng-model="q" placeholder="search urls ..." />
+    </div>
+    <br />
+    <br />
+
+    <div ng-hide="url.response > 200">
+      <h3>Problem URLs </h3>
+      <div class="large-12 columns">
+      <table style="width:100%">
+        <tr>
+          <th> Response </th>
+          <th> Total Time </th>
+          <th> URL </th>
+        </tr>
+        <tr ng-repeat="url in urls | filter:q" ng-if="url.response > 200">
+            <td ng-style="set_color(url.response)"> {{ url.response }} </td> 
+            <td> {{ url.total_time }} </td> 
+            <td> <a ng-href="{{ url.url }}" > {{ url.url }} </a> </td>
+          </tr>
+      </table>
+    </div>
+    </div>
+    <h3> All URL's </h3>
+    <div class="large-12 columns">
+      <table style="width:100%">
+        <tr>
+          <th> Response </th>
+          <th> Total Time </th>
+          <th> URL </th>
+        </tr>
+          <tr ng-repeat="url in urls | filter:q">
+            <td ng-style="set_color(url.response)" > {{ url.response }} </td> 
+            <td> {{ url.total_time }} </td> 
+            <td> <a ng-href="{{ url.url }}" > {{ url.url }} </a> </td>
+          </tr>
+      </table>
+    </div>
+  </body>
+</html>
+
